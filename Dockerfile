@@ -3,7 +3,7 @@ FROM debian:stretch
 
 ENV NPM_CONFIG_PREFIX /usr/local
 
-RUN groupadd beame-gatekeeper && useradd -g beame-gatekeeper beame-gatekeeper -s /bin/bash
+RUN groupadd beame-gatekeeper && useradd -g beame-gatekeeper beame-gatekeeper -s /bin/sh
 
 # git - for npm install
 # python, build-essential - for node gyp
