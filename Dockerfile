@@ -1,14 +1,17 @@
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices
 FROM debian:stretch
 
+ENV NPM_CONFIG_PREFIX /usr/local
+
 RUN groupadd beame-gatekeeper && useradd -g beame-gatekeeper beame-gatekeeper -s /bin/bash
 
 # git - for npm install
 # python, build-essential - for node gyp
-RUN apt-get -y update && apt-get -y upgrade && apt-get -y install curl git python build-essential sudo && rm -rf /var/lib/apt/lists/*
+# jq - for help.sh to print the version
+RUN apt-get -y update && apt-get -y upgrade && apt-get -y install curl git python build-essential sudo jq && rm -rf /var/lib/apt/lists/*
 
 COPY nodejs.sh /nodejs.sh
-RUN /nodejs.sh && rm /nodejs.sh && npm config set prefix /usr/local
+RUN /nodejs.sh && rm /nodejs.sh
 
 RUN USER=root npm -g install beame-gatekeeper
 
@@ -17,8 +20,9 @@ VOLUME /home/beame-gatekeeper
 WORKDIR /home/beame-gatekeeper
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY help.sh /usr/local/bin/help.sh
 ENTRYPOINT ["entrypoint.sh"]
-CMD ["beame-gatekeeper"]
+CMD ["/usr/local/bin/help.sh"]
 
 # TODO
 # + Make sure that releasing new npm version of beame-gatekeeper will rebuild the image
