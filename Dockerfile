@@ -10,10 +10,10 @@ RUN groupadd beame-gatekeeper && useradd -g beame-gatekeeper beame-gatekeeper -s
 # jq - for help.sh to print the version
 RUN apt-get -y update && apt-get -y upgrade && apt-get -y install curl git python build-essential sudo jq && rm -rf /var/lib/apt/lists/*
 
-COPY nodejs.sh /nodejs.sh
-RUN /nodejs.sh && rm /nodejs.sh
+# https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && apt-get install -y nodejs
 
-RUN USER=root npm -g install beame-gatekeeper
+RUN USER=root npm -g install --unsafe-perm beame-gatekeeper
 
 # USER beame-gatekeeper
 VOLUME /home/beame-gatekeeper
