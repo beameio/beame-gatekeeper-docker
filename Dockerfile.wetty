@@ -4,7 +4,7 @@ FROM node6
 RUN groupadd wetty && useradd -g wetty wetty -s /bin/sh
 
 # python, build-essential - for node gyp
-RUN apt-get -y update && apt-get -y upgrade && apt-get -y install python build-essential && rm -rf /var/lib/apt/lists/*
+RUN apt-get -y update && apt-get -y upgrade && apt-get -y install python build-essential ssh && rm -rf /var/lib/apt/lists/*
 
 RUN USER=root npm -g install --unsafe-perm wetty
 
