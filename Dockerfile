@@ -1,17 +1,12 @@
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices
-FROM debian:stretch
-
-ENV NPM_CONFIG_PREFIX /usr/local
+FROM node6:latest
 
 RUN groupadd beame-gatekeeper && useradd -g beame-gatekeeper beame-gatekeeper -s /bin/sh
 
 # git - for npm install
 # python, build-essential - for node gyp
 # jq - for help.sh to print the version
-RUN apt-get -y update && apt-get -y upgrade && apt-get -y install curl git python build-essential sudo jq && rm -rf /var/lib/apt/lists/*
-
-# https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
-RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && apt-get install -y nodejs
+RUN apt-get -y update && apt-get -y upgrade && apt-get -y install git python build-essential jq && rm -rf /var/lib/apt/lists/*
 
 RUN USER=root npm -g install --unsafe-perm beame-gatekeeper
 

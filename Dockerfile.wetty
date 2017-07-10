@@ -1,5 +1,5 @@
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices
-FROM node6
+FROM node6:latest
 
 RUN groupadd wetty && useradd -g wetty wetty -s /bin/sh
 
