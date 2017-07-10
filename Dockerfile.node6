@@ -1,0 +1,10 @@
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices
+FROM debian:stretch
+
+ENV NPM_CONFIG_PREFIX /usr/local
+
+# python, build-essential - for node gyp
+RUN apt-get -y update && apt-get -y upgrade && apt-get -y install curl sudo gnupg && rm -rf /var/lib/apt/lists/*
+
+# https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && apt-get install -y nodejs
