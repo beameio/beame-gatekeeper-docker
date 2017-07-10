@@ -24,9 +24,9 @@ Click save button at the end of the row.
 
 ![Sceenshot of configured Wetty service](images/wetty-service-configuration.png?raw=true "Configured Wetty service")
 
-# Beame building instructions
+# Beame team internal building instructions
 
-Till automated we are using these instructions to build the docker images:
+Till automated we are using following instructions to build the docker images. Run on Debian Stretch. Typically that will be the VM with `role=docker-builder`.
 
 	# Cleaning all images might be needed:
 	docker rm $(docker ps -a -q)
