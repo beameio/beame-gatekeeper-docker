@@ -137,11 +137,11 @@ Till automated we are using following instructions to build the docker images. R
 
 	# Docker insta-ssl
 
-	TAG=beame/instassl
+	TAG=beame/insta-ssl
 
 	docker build -f Dockerfile.insta -t "$TAG" .
 
-	docker run --name instassl --rm -it -v /tmp/d1:/home/beame-insta-ssl "$TAG" beame-insta-ssl
+	docker run --name insta-ssl --rm -it -v /tmp/d1:/home/beame-insta-ssl "$TAG" beame-insta-ssl
 	docker push "$TAG"
 
 	# Docker insta-ssl - arm
@@ -151,5 +151,5 @@ Till automated we are using following instructions to build the docker images. R
 	TAG=beame/insta-ssl-armhf
 	docker build -f Dockerfile.insta.arm -t "$TAG" .
 
-	docker run --name instassl --rm -it -v /tmp/d1:/home/beame-insta-ssl "$TAG" beame-insta-ssl server start
+	docker run --name insta-ssl --rm -it -v /tmp/d1:/home/beame-insta-ssl "$TAG" beame-insta-ssl
 	docker push "$TAG"

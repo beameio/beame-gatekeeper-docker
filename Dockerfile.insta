@@ -8,7 +8,7 @@ RUN groupadd beame-insta-ssl && useradd -g beame-insta-ssl beame-insta-ssl -s /b
 # jq - for help.sh to print the version
 RUN apt-get -y update && apt-get -y upgrade && apt-get -y install git python build-essential jq && rm -rf /var/lib/apt/lists/*
 
-RUN USER=root npm -g install beame-insta-ssl
+RUN USER=root npm -g install --unsafe-perm beame-insta-ssl
 
 # USER beame-insta-ssl
 VOLUME /home/beame-insta-ssl
