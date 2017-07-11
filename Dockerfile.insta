@@ -1,0 +1,25 @@
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices
+FROM node6:latest
+
+RUN groupadd beame-insta-ssl && useradd -g beame-insta-ssl beame-insta-ssl -s /bin/sh
+
+# git - for npm install
+# python, build-essential - for node gyp
+# jq - for help.sh to print the version
+RUN apt-get -y update && apt-get -y upgrade && apt-get -y install git python build-essential jq && rm -rf /var/lib/apt/lists/*
+
+RUN USER=root npm -g install beame-insta-ssl
+
+# USER beame-insta-ssl
+VOLUME /home/beame-insta-ssl
+WORKDIR /home/beame-insta-ssl
+
+COPY entrypoint.insta.sh /usr/local/bin/entrypoint.sh
+COPY help.insta.sh /usr/local/bin/help.sh
+ENTRYPOINT ["entrypoint.sh"]
+CMD ["/usr/local/bin/help.sh"]
+
+# TODO
+# + Make sure that releasing new npm version of beame-insta-ssl will rebuild the image
+# + readme
+

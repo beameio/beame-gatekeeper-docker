@@ -134,3 +134,22 @@ Till automated we are using following instructions to build the docker images. R
 
 	docker run --name gatekeeper --link wetty --rm -it -v /tmp/d1:/home/beame-gatekeeper "$TAG" beame-gatekeeper server start
 	docker push "$TAG"
+
+	# Docker insta-ssl
+
+	TAG=beame/instassl
+
+	docker build -f Dockerfile.insta -t "$TAG" .
+
+	docker run --name instassl --rm -it -v /tmp/d1:/home/beame-insta-ssl "$TAG" beame-insta-ssl
+	docker push "$TAG"
+
+	# Docker insta-ssl - arm
+
+	sed 's/^FROM node6/FROM node6-arm/' <Dockerfile.insta >Dockerfile.insta.arm
+
+	TAG=beame/insta-ssl-armhf
+	docker build -f Dockerfile.insta.arm -t "$TAG" .
+
+	docker run --name instassl --rm -it -v /tmp/d1:/home/beame-insta-ssl "$TAG" beame-insta-ssl server start
+	docker push "$TAG"
