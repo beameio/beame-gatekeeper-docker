@@ -19,6 +19,8 @@ COPY help.insta.sh /usr/local/bin/help.sh
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["/usr/local/bin/help.sh"]
 
+EXPOSE 50000
+
 # TODO
 # + Make sure that releasing new npm version of beame-insta-ssl will rebuild the image
 # + readme
