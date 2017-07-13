@@ -27,12 +27,12 @@ F get_npm_version(package_name:Str) {
 	v
 }
 
-F build_npm_docker(docker_tag_prefix:Str, package_name:Str, cb:Fun) {
+F build_npm_docker(docker_tag_prefix:Str, package_name:Str) {
 	package_version = get_npm_version(package_name)
 	docker_tag = "${docker_tag_prefix}:${package_version}"
 	if not(docker_image_exists(docker_tag)) {
 		log("Starting build of $docker_tag")
-		cb(package_version)
+		$(docker build -f "Dockerfile.${package_name}" -t "${package_name}:${package_version}" .)
 	}
 }
 
@@ -44,7 +44,5 @@ F build_npm_docker(docker_tag_prefix:Str, package_name:Str, cb:Fun) {
 
 get_npm_version('beame-gatekeeper')
 
-build_npm_docker('beame/gatekeeper', 'beame-gatekeeper', F(package_version) {
-
-
-})
+# build_npm_docker('beame/gatekeeper', 'beame-gatekeeper')
+build_npm_docker('beame/wetty', 'wetty')
