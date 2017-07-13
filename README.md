@@ -111,7 +111,7 @@ Till automated we are using following instructions to build the docker images. R
 	sed 's/^FROM node6/FROM node6-arm/' <Dockerfile.wetty >Dockerfile.wetty.arm
 
 	TAG=beame/wetty-armhf
-	docker build -f Dockerfile.wetty.arm wetty -t "$TAG" .
+	docker build -f Dockerfile.wetty.arm -t "$TAG" .
 
 	docker run --name wetty -p 3000:3000 --rm -it "$TAG" wetty -p 3000 --sshhost 172.17.42.1
 	docker push "$TAG"

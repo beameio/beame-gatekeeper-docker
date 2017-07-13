@@ -4,16 +4,16 @@ FROM node6:latest
 RUN groupadd wetty && useradd -g wetty wetty -s /bin/sh
 
 # python, build-essential - for node gyp
-RUN apt-get -y update && apt-get -y upgrade && apt-get -y install python build-essential ssh && rm -rf /var/lib/apt/lists/*
+RUN apt-get -y update && apt-get -y upgrade && apt-get -y install python build-essential openssh-client && rm -rf /var/lib/apt/lists/*
 
-RUN USER=root npm -g install --unsafe-perm wetty
+RUN USER=root npm -g install --unsafe-perm wetty && v=$(npm -g info --unsafe-perm wetty version) && echo "wetty version $v" >/etc/entrypoint.issue
 
 # USER wetty
 VOLUME /home/wetty
 WORKDIR /home/wetty
 
-COPY entrypoint.wetty.sh /usr/local/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
 CMD ["wetty"]
 
 EXPOSE 3000
+
+ENV USER_IN_DOCKER wetty
