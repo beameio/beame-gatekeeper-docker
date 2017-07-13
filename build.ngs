@@ -1,0 +1,50 @@
+#!/usr/bin/env ngs
+
+F docker_image_exists(name:Str) {
+	exists = $(ok:[0,1] docker inspect $name 2>/dev/null).Bool()
+	if exists {
+		log("Image $name exists.")
+	} else {
+		log("Image $name does not exist.")
+	}
+}
+
+F build_docker(name:Str, how_to_build:Fun) {
+	if docker_image_exists(name) {
+		log("Image $name exists.")
+	} else {
+		log("Image $name does not exist, building.")
+		how_to_build()
+	}
+
+}
+
+F get_npm_version(package_name:Str) {
+	log("Checking NPM version for $package_name")
+	v = `npm view $package_name version`.lines()[0]
+	log("NPM version of $package_name is $v")
+	assert(v ~ /^[0-9.]+$/)
+	v
+}
+
+F build_npm_docker(docker_tag_prefix:Str, package_name:Str, cb:Fun) {
+	package_version = get_npm_version(package_name)
+	docker_tag = "${docker_tag_prefix}:${package_version}"
+	if not(docker_image_exists(docker_tag)) {
+		log("Starting build of $docker_tag")
+		cb(package_version)
+	}
+}
+
+# TODO: check existing image node version vs what's in repo
+#       to decide whether rebuild is needed
+## build_docker('node6') with {
+## 	$(top_level: docker build -f Dockerfile.node6 -t node6 .)
+## }
+
+get_npm_version('beame-gatekeeper')
+
+build_npm_docker('beame/gatekeeper', 'beame-gatekeeper', F(package_version) {
+
+
+})
